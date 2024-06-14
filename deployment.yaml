@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appimc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appimc
+  template:
+    metadata:
+      labels:
+        app: appimc
+    spec:
+      containers:
+      - name: appimc
+        image: appimc
+        ports:
+        - containerPort: 3000

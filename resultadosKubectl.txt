@@ -1,0 +1,283 @@
+kubectl get pods -o yaml
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2024-06-13T23:59:44Z"
+    generateName: appimc-7d4d76bbcd-
+    labels:
+      app: appimc
+      pod-template-hash: 7d4d76bbcd
+    name: appimc-7d4d76bbcd-5xtxc
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: appimc-7d4d76bbcd
+      uid: ce450ce5-8ec4-482b-b69a-a3af888f5977
+    resourceVersion: "800"
+    uid: 16f7c55f-aca1-4376-be08-42c70b2b1962
+  spec:
+    containers:
+    - image: appimc
+      imagePullPolicy: Always
+      name: appimc
+      ports:
+      - containerPort: 3000
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-x6jf8
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: minikube
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-x6jf8
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-13T23:59:51Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-13T23:59:44Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-13T23:59:44Z"
+      message: 'containers with unready status: [appimc]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-13T23:59:44Z"
+      message: 'containers with unready status: [appimc]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-06-13T23:59:44Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - image: appimc
+      imageID: ""
+      lastState: {}
+      name: appimc
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        waiting:
+          message: Back-off pulling image "appimc"
+          reason: ImagePullBackOff
+    hostIP: 192.168.49.2
+    hostIPs:
+    - ip: 192.168.49.2
+    phase: Pending
+    podIP: 10.244.0.4
+    podIPs:
+    - ip: 10.244.0.4
+    qosClass: BestEffort
+    startTime: "2024-06-13T23:59:44Z"
+kind: List
+metadata:
+  resourceVersion: ""
+PS C:\Users\thaiz\OneDrive\Documentos\GITHUB\appimc> ^C
+PS C:\Users\thaiz\OneDrive\Documentos\GITHUB\appimc> kubectl get pods
+NAME                      READY   STATUS             RESTARTS   AGE
+appimc-7d4d76bbcd-5xtxc   0/1     ImagePullBackOff   0          12m
+PS C:\Users\thaiz\OneDrive\Documentos\GITHUB\appimc>   kubectl get services -o yaml 
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"appimc","namespace":"default"},"spec":{"ports":[{"port":3000,"protocol":"TCP","targetPort":3000}],"selector":{"app":"appimc"}}}
+    creationTimestamp: "2024-06-13T23:59:50Z"
+    name: appimc
+    namespace: default
+    resourceVersion: "461"
+    uid: 6ffa811b-9cc4-4c49-b8f2-1462a31dcd9a
+  spec:
+    clusterIP: 10.100.89.96
+    clusterIPs:
+    - 10.100.89.96
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 3000
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      app: appimc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2024-06-13T23:59:26Z"
+    labels:
+      component: apiserver
+      provider: kubernetes
+    name: kubernetes
+    namespace: default
+    resourceVersion: "236"
+    uid: eab4f0c4-2217-49b0-8db0-af52d092f12c
+  spec:
+    clusterIP: 10.96.0.1
+    clusterIPs:
+    - 10.96.0.1
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+PS C:\Users\thaiz\OneDrive\Documentos\GITHUB\appimc> kubectl describe pods
+Name:             appimc-7d4d76bbcd-5xtxc
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Thu, 13 Jun 2024 20:59:44 -0300
+Labels:           app=appimc
+                  pod-template-hash=7d4d76bbcd
+Annotations:      <none>
+Status:           Pending
+IP:               10.244.0.4
+IPs:
+  IP:           10.244.0.4
+Controlled By:  ReplicaSet/appimc-7d4d76bbcd
+Containers:
+  appimc:
+    Container ID:
+    Image:          appimc
+    Image ID:
+    Port:           3000/TCP
+    Host Port:      0/TCP
+    State:          Waiting
+      Reason:       ImagePullBackOff
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-x6jf8 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       False
+  ContainersReady             False
+  PodScheduled                True
+Volumes:
+  kube-api-access-x6jf8:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                  From               Message
+  ----     ------     ----                 ----               -------
+  Normal   Scheduled  13m                  default-scheduler  Successfully assigned default/appimc-7d4d76bbcd-5xtxc to minikube
+  Normal   Pulling    11m (x4 over 13m)    kubelet            Pulling image "appimc"
+  Warning  Failed     11m (x4 over 13m)    kubelet            Failed to pull image "appimc": Error response from daemon: pull access denied for appimc, repository does not exist or may require 'docker login': denied: requested access to the resource is denied
+  Warning  Failed     11m (x4 over 13m)    kubelet            Error: ErrImagePull
+  Warning  Failed     11m (x6 over 13m)    kubelet            Error: ImagePullBackOff
+  Normal   BackOff    3m4s (x40 over 13m)  kubelet            Back-off pulling image "appimc"
+PS C:\Users\thaiz\OneDrive\Documentos\GITHUB\appimc> kubectl describe services
+Name:              appimc
+Namespace:         default
+Labels:            <none>
+Annotations:       <none>
+Selector:          app=appimc
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.100.89.96
+IPs:               10.100.89.96
+Port:              <unset>  3000/TCP
+TargetPort:        3000/TCP
+Endpoints:
+Session Affinity:  None
+Events:            <none>
+
+
+Name:              kubernetes
+Namespace:         default
+Labels:            component=apiserver
+                   provider=kubernetes
+Annotations:       <none>
+Selector:          <none>
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.96.0.1
+IPs:               10.96.0.1
+Port:              https  443/TCP
+TargetPort:        8443/TCP
+Endpoints:         192.168.49.2:8443
+Session Affinity:  None
+Events:            <none>
